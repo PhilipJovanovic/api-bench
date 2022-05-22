@@ -1,13 +1,16 @@
 'use strict'
 
 const path = require('path')
-const AutoLoad = require('fastify-autoload')
+const AutoLoad = require('@fastify/autoload')
 
 module.exports = async function (fastify, opts) {
   // Place here your custom code!
 
   // Do not touch the following lines
 
+  fastify.register(require('fastify-jwt'), {
+    secret: process.env.JWT_SECRET || 'PLSCHANGETHISLINEASAP'
+  })
   // This loads all plugins defined in plugins
   // those should be support plugins that are reused
   // through your application
