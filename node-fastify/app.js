@@ -8,9 +8,19 @@ module.exports = async function (fastify, opts) {
 
   // Do not touch the following lines
 
-  fastify.register(require('fastify-jwt'), {
-    secret: process.env.JWT_SECRET || 'PLSCHANGETHISLINEASAP'
+  fastify.setErrorHandler(function (error, request, reply) {
+    // Log error
+    this.log.error(error)
+    // Send error response
+    reply.send({ error: true, data: "Something went wrong", details: error.message })
   })
+
+  /* fastify.setErrorHandler(function (error, request, reply) {
+    // Log error
+    this.log.error(error)
+    // Send error response
+    reply.status(409).send({ ok: false })
+  }) */
   // This loads all plugins defined in plugins
   // those should be support plugins that are reused
   // through your application
